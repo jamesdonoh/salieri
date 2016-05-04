@@ -1,15 +1,17 @@
 {
   "name": "salieri",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tiny ES6 server for playing around with experimental web component envelopes",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesdonoh/salieri.git"
+  },
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.4",
+    "lodash": "^4.11.2",
     "mustache": "^2.2.1",
     "request-promise": "^3.0.0"
   }

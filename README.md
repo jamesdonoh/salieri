@@ -9,14 +9,14 @@ Tiny ES6 server for playing around with experimental web component envelopes.
 ## Usage
 
 ```
-npm install
-node index.js template.html config.json [params.json]
+$ npm install
+$ node index.js template.html config.json [params.json]
 ```
 
 #### Certificate support
 
 ```
-CERT_FILE=/path/to/mycert.pem CA_FILE=/path/to/ca.pem node index.js ...
+$ CERT_FILE=/path/to/mycert.pem CA_FILE=/path/to/ca.pem node index.js ...
 ```
 
 #### Known issues/limitations
