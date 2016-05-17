@@ -1,8 +1,10 @@
 'use strict';
 
 var fs = require('fs'),
-    rp = require('request-promise'),
-    server = require('./server');
+    request = require('request-promise'),
+    makeBuilder = require('./lib/builder').makeBuilder,
+    server = require('./lib/server'),
+    reduceResponses = require('./lib/envelope').combine;
 
 const SERVER_PORT = 3000;
 
@@ -23,7 +25,11 @@ if (process.env.CERT_FILE && process.env.CA_FILE) {
     let certData = fs.readFileSync(process.env.CERT_FILE),
         caData = fs.readFileSync(process.env.CA_FILE);
 
-    rp = rp.defaults({ cert: certData, key: certData, ca: caData });
+    request = request.defaults({ cert: certData, key: certData, ca: caData });
 }
 
-server.start(rp, template, config, params, SERVER_PORT);
+const buildPage = makeBuilder(template, reduceResponses, config, request, params);
+
+server.start(buildPage, SERVER_PORT);
+
+console.log('Listening on port %d', SERVER_PORT);
