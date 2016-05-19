@@ -4,7 +4,7 @@ var fs = require('fs'),
     request = require('request-promise'),
     makeBuilder = require('./lib/builder').makeBuilder,
     server = require('./lib/server'),
-    reduceResponses = require('./lib/envelope').combine;
+    envelope = require('./lib/envelope');
 
 const SERVER_PORT = 3000;
 
@@ -28,7 +28,7 @@ if (process.env.CERT_FILE && process.env.CA_FILE) {
     request = request.defaults({ cert: certData, key: certData, ca: caData });
 }
 
-const buildPage = makeBuilder(template, reduceResponses, config, request, params);
+const buildPage = makeBuilder(template, envelope, config, request, params);
 
 server.start(buildPage, SERVER_PORT);
 
