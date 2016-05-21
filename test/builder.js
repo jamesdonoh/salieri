@@ -1,9 +1,8 @@
-const chai = require('chai'),
-    sinon = require("sinon"),
-    assert = chai.assert,
-    createBuilder = require('../lib/builder').createBuilder;
+const assert = require('chai').assert;
+const sinon = require('sinon');
+const createBuilder = require('../lib/builder').createBuilder;
 
-sinon.assert.expose(chai.assert, { prefix: "" });
+sinon.assert.expose(assert, { prefix: '' });
 
 describe('Page Builder', function () {
     const mockTemplate = '{{body}}';
