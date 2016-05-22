@@ -1,6 +1,6 @@
 # salieri
 
-Tiny ES6 server for playing around with experimental web component envelopes.
+Tiny ES6 server for playing around with and debugging web component envelopes.
 
 ## Requirements
 
@@ -13,13 +13,21 @@ $ npm install
 $ node index.js template.html config.json [params.json]
 ```
 
-The optional `params.json` file should contain static parameters for endpoint URLs, e.g.:
+Then point your browser at http://localhost:3000/.
 
-```
-{
-    "country": "gb"
-}
-```
+## Parameters
+
+Endpoint parameters may be passed via the query string, e.g.
+http://localhost:3000/?topic=8abd564a-2b8e-401c-9916-34982cb67b55&country=gb
+
+## Debugging
+
+The `envelope` module supports the following options to aid with debugging:
+
+- showErrors: if `true`, add an error message to the page for any components that
+  could not be requested or parsed (default `true`)
+- addLabels: prepends the bodyInline of each component with an HTML label containing
+  the component's `id` property (default `false`)
 
 #### Certificate support
 
@@ -29,6 +37,5 @@ $ CERT_FILE=/path/to/mycert.pem CA_FILE=/path/to/ca.pem node index.js ...
 
 #### Known issues/limitations
 
-- Only static parameters currently supported
 - Requests not batched to each host
-- `must_succeed: false` option in config is ignored
+- No support for `must_succeed: false` option
