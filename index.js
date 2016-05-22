@@ -30,6 +30,6 @@ if (process.env.CERT_FILE && process.env.CA_FILE) {
 
 const buildPage = createBuilder(template, config, request, Envelope);
 
-server.start(buildPage, SERVER_PORT);
+server.createServer(buildPage).listen(SERVER_PORT);
 
 console.log('Listening on port %d', SERVER_PORT);
