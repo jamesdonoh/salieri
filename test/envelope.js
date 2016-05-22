@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 sinon.assert.expose(assert, { prefix: '' });
 
-describe('Envelope Utilities', function () {
+describe('Envelope Tools', function () {
     describe('#parse', function () {
         const body = '{ "bodyInline": "component body" }';
         const component = { id: 'some-id' };
