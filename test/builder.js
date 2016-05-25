@@ -41,21 +41,24 @@ describe('Page Builder', function () {
                 assert.strictEqual(page, 'Hello, Janet.'));
         });
 
-        it('should reduce responses in order of endpoint config', function () {
+        it('should render data in config order, not endpoint response order', function () {
+            this.slow(500);
+
             const config = JSON.stringify({
                 components: [
-                    { endpoint: 'first' },
-                    { endpoint: 'second' },
-                    { endpoint: 'third' }
+                    { endpoint: '100ms response' },
+                    { endpoint: '25ms response' },
+                    { endpoint: '50ms response' }
                 ]
             });
 
-            const mockRp = (url) => Promise.resolve(url);
+            const mockRp = (url) => new Promise((resolve) =>
+                setTimeout(() => resolve(url), url.split('ms')[0]));
 
             const buildPage = createBuilder(mockTemplate, config, mockRp, mockEnvelope);
 
             return buildPage().then((page) =>
-                assert.strictEqual(page, 'first,second,third'));
+                assert.strictEqual(page, '100ms response,25ms response,50ms response'));
         });
 
         it('should expand {{parameters}} within endpoint URLs', function () {
