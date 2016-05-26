@@ -1,11 +1,5 @@
 'use strict';
 
-const readFile = (filename) => require('fs').readFileSync(filename, 'utf-8');
-let rp = require('request-promise');
-
-const createBuilder = require('./lib/builder').createBuilder;
-const server = require('./lib/server');
-
 const SERVER_PORT = 3000;
 
 const argv = require('yargs')
@@ -37,8 +31,12 @@ const argv = require('yargs')
     .help('help')
     .argv;
 
+const readFile = (filename) => require('fs').readFileSync(filename, 'utf-8');
+
 const template = readFile(argv.template);
 const config = readFile(argv.config);
+
+let rp = require('request-promise');
 
 if (argv.cert) {
     const certData = readFile(argv.cert);
@@ -51,7 +49,10 @@ if (argv.cacert) {
 
 const Envelope = require('./lib/envelope')(argv);
 
+const createBuilder = require('./lib/builder').createBuilder;
 const buildPage = createBuilder(template, config, rp, Envelope);
+
+const server = require('./lib/server');
 
 server.createServer(buildPage)
     .listen(SERVER_PORT, () => console.log('Listening on port %d', SERVER_PORT));
