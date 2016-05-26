@@ -21,17 +21,17 @@ const argv = require('yargs')
         describe: 'path to page config JSON'
     })
     .option('cert', {
-        describe: 'send the specified client certificate to HTTPS servers'
+        describe: 'use specified client certificate for TLS'
     })
     .option('cacert', {
-        describe: 'use the specified CA certificate to verify HTTPS servers'
+        describe: 'use specified CA certificate for TLS'
     })
     .option('labels', {
         describe: 'show component labels to help with debugging',
         default: false
     })
     .option('noerrors', {
-        describe: 'do not display request/parsing errors in markup',
+        describe: 'do not display request errors in markup',
         default: false
     })
     .help('help')
