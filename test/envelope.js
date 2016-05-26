@@ -8,7 +8,7 @@ describe('Envelope Tools', function () {
         const body = '{ "bodyInline": "component body" }';
         const component = { id: 'some-id' };
 
-        describe('with addLabels option not specified', function () {
+        describe('with labels option not specified', function () {
             const envelope = require('../lib/envelope')();
 
             it('should parse JSON', function () {
@@ -16,8 +16,8 @@ describe('Envelope Tools', function () {
             });
         });
 
-        describe('with addLabels option set to true', function () {
-            const envelope = require('../lib/envelope')({ addLabels: true });
+        describe('with labels option set to true', function () {
+            const envelope = require('../lib/envelope')({ labels: true });
 
             it('should parse JSON and add component ID to bodyInline', function () {
                 const bodyInline = envelope.parse(body, component).bodyInline;
@@ -114,8 +114,8 @@ describe('Envelope Tools', function () {
             });
         });
 
-        describe('with showErrors option set to false', function () {
-            const envelope = require('../lib/envelope')({ showErrors: false });
+        describe('with noerrors option set to true', function () {
+            const envelope = require('../lib/envelope')({ noerrors: true });
 
             it('should return an empty object', function () {
                 assert.deepEqual(envelope.recoverError(new Error(), component), {});
