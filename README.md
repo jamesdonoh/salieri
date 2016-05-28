@@ -1,10 +1,10 @@
 # salieri
 
-A tiny ES6 server for playing around with and debugging web component envelopes.
+Tiny ES6 server for playing around with and debugging web component envelopes.
 
 ## Requirements
 
-- Node.js v5.9 or later
+- Node.js v4.0 or later
 
 ## Usage
 
@@ -39,13 +39,15 @@ Unit tests can be run with:
 npm test
 ```
 
-## Changes
+If you have `eslint` installed, it can be used to check against coding standards.
+
+## Changelog
 
 ### 2.0.0
 
-- Refactored to make maintenance easier
-- Added unit tests
-- Added `labels` and `noerrors` command-line options
+- Refactored to make the code easier to maintain and extend
+- Added some unit tests
+- Added `labels` and `noerrors` debugging options
 - Command-line option parsing via [yargs](https://www.npmjs.com/package/yargs)
 
 ### 1.0.0
