@@ -1,12 +1,12 @@
 {
   "name": "salieri",
   "version": "1.0.0",
-  "description": "Tiny ES6 server for playing around with experimental web component envelopes",
+  "description": "Tiny ES6 server for playing around with and debugging web component envelopes",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha"
   },
-  "author": "",
+  "author": "James Donohue",
   "repository": {
     "type": "git",
     "url": "https://github.com/jamesdonoh/salieri.git"
@@ -16,10 +16,13 @@
     "express": "^4.13.4",
     "lodash": "^4.11.2",
     "mustache": "^2.2.1",
-    "request-promise": "^3.0.0"
+    "request-promise": "^3.0.0",
+    "yargs": "^4.7.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.4",
+    "supertest": "^1.2.0"
   }
 }
