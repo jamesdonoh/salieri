@@ -1,29 +1,62 @@
 'use strict';
 
-var fs = require('fs'),
-    rp = require('request-promise'),
-    server = require('./server');
+/* eslint no-sync: "off" */
 
+const fs = require('fs');
 const SERVER_PORT = 3000;
 
-if (process.argv.length < 4) {
-    console.log('Usage: node %s <template> <config> [params]', process.argv[1]);
-    process.exit(1);
+const argv = require('yargs')
+    .usage('Usage: $0 [options] -t <template> -c <config>')
+    .option('template', {
+        alias: 't',
+        demand: true,
+        describe: 'path to page template'
+    })
+    .option('config', {
+        alias: 'c',
+        demand: true,
+        describe: 'path to page config JSON'
+    })
+    .option('cert', {
+        describe: 'use specified client certificate for TLS'
+    })
+    .option('cacert', {
+        describe: 'use specified CA certificate for TLS'
+    })
+    .option('labels', {
+        describe: 'show component labels to help with debugging',
+        default: false
+    })
+    .option('noerrors', {
+        describe: 'do not display request errors in markup',
+        default: false
+    })
+    .help('help')
+    .argv;
+
+const readFile = (filename) => fs.readFileSync(filename, 'utf-8');
+
+const template = readFile(argv.template);
+const config = readFile(argv.config);
+
+let rp = require('request-promise');
+
+if (argv.cert) {
+    const certData = readFile(argv.cert);
+
+    rp = rp.defaults({ cert: certData, key: certData });
 }
 
-var readText = (filename) => fs.readFileSync(filename, 'utf-8'),
-    readJson = (filename) => JSON.parse(readText(filename));
-
-var template = readText(process.argv[2]),
-    config = readJson(process.argv[3]),
-    params = process.argv.length > 4 ? readJson(process.argv[4]) : {};
-
-// Optionally enable TLS certificate support
-if (process.env.CERT_FILE && process.env.CA_FILE) {
-    let certData = fs.readFileSync(process.env.CERT_FILE),
-        caData = fs.readFileSync(process.env.CA_FILE);
-
-    rp = rp.defaults({ cert: certData, key: certData, ca: caData });
+if (argv.cacert) {
+    rp = rp.defaults({ ca: readFile(argv.cacert) });
 }
 
-server.start(rp, template, config, params, SERVER_PORT);
+const Envelope = require('./lib/envelope')(argv);
+
+const createBuilder = require('./lib/builder').createBuilder;
+const buildPage = createBuilder(template, config, rp, Envelope);
+
+const server = require('./lib/server');
+
+server.createServer(buildPage)
+    .listen(SERVER_PORT, () => console.log('Listening on port %d', SERVER_PORT));
