@@ -1,5 +1,8 @@
 'use strict';
 
+/* eslint no-sync: "off" */
+
+const fs = require('fs');
 const SERVER_PORT = 3000;
 
 const argv = require('yargs')
@@ -31,7 +34,7 @@ const argv = require('yargs')
     .help('help')
     .argv;
 
-const readFile = (filename) => require('fs').readFileSync(filename, 'utf-8');
+const readFile = (filename) => fs.readFileSync(filename, 'utf-8');
 
 const template = readFile(argv.template);
 const config = readFile(argv.config);
@@ -40,6 +43,7 @@ let rp = require('request-promise');
 
 if (argv.cert) {
     const certData = readFile(argv.cert);
+
     rp = rp.defaults({ cert: certData, key: certData });
 }
 

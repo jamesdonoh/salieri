@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('chai').assert;
 const sinon = require('sinon');
 const createBuilder = require('../lib/builder').createBuilder;
@@ -10,7 +12,7 @@ describe('Page Builder', function () {
 
     beforeEach(function () {
         mockEnvelope = {
-            parse: (body, component) => body,
+            parse: (body) => body,
             combine: (responses) => ({ body: responses.join() }),
             recoverError: sinon.spy()
         };
@@ -53,7 +55,7 @@ describe('Page Builder', function () {
             });
 
             const mockRp = (url) => new Promise((resolve) =>
-                setTimeout(() => resolve(url), url.split('ms')[0]));
+                setTimeout(() => resolve(url), url.split('ms').pop()));
 
             const buildPage = createBuilder(mockTemplate, config, mockRp, mockEnvelope);
 
@@ -90,7 +92,7 @@ describe('Page Builder', function () {
                 // Little dance to check that async error is thrown
                 return buildPage()
                     .then(assert.fail)
-                    .catch((err) => assert.instanceOf(err, TypeError))
+                    .catch((err) => assert.instanceOf(err, TypeError));
             });
 
             it('should allow recovery of request errors', function () {
@@ -100,11 +102,11 @@ describe('Page Builder', function () {
                     ]
                 });
 
-                const mockRp = (url) => Promise.reject(new Error('async error'));
+                const mockRp = () => Promise.reject(new Error('async error'));
 
                 const buildPage = createBuilder(mockTemplate, config, mockRp, mockEnvelope);
 
-                return buildPage().then((page) =>
+                return buildPage().then(() =>
                     assert.calledWithMatch(mockEnvelope.recoverError, { message: 'async error' }));
             });
 
@@ -115,13 +117,15 @@ describe('Page Builder', function () {
                     ]
                 });
 
-                const mockRp = (url) => Promise.resolve('unparseable body');
+                const mockRp = () => Promise.resolve('unparseable body');
 
-                mockEnvelope.parse = (body, component) => { throw new Error('parse error'); }
+                mockEnvelope.parse = () => {
+                    throw new Error('parse error');
+                };
 
                 const buildPage = createBuilder(mockTemplate, config, mockRp, mockEnvelope);
 
-                return buildPage().then((page) =>
+                return buildPage().then(() =>
                     assert.calledWithMatch(mockEnvelope.recoverError, { message: 'parse error' }));
             });
         });

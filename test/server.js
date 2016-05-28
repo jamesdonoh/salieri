@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('chai').assert;
 const sinon = require('sinon');
 const request = require('supertest');
@@ -11,7 +13,7 @@ describe('Web Server', function () {
 
         describe('GET /', function () {
             it('responds with HTML', function (done) {
-                const buildPage = (params) => Promise.resolve('page body');
+                const buildPage = () => Promise.resolve('page body');
                 const app = server.createServer(buildPage);
 
                 request(app)
@@ -45,7 +47,9 @@ describe('Web Server', function () {
             });
 
             it('displays error page for sync errors thrown by page builder', function (done) {
-                const buildPage = (params) => { throw new Error('_sync error_') };
+                const buildPage = () => {
+                    throw new Error('_sync error_');
+                };
                 const app = server.createServer(buildPage);
 
                 request(app)
@@ -55,7 +59,7 @@ describe('Web Server', function () {
             });
 
             it('displays error page for async errors thrown by page builder', function (done) {
-                const buildPage = (params) =>
+                const buildPage = () =>
                     new Promise((resolve, reject) => reject(new Error('_async error_')));
                 const app = server.createServer(buildPage);
 

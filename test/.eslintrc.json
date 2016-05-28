@@ -1,0 +1,12 @@
+{
+    "env": {
+        "mocha": true
+    },
+    "rules": {
+        "init-declarations": "off",
+        "global-require": "off",
+        "no-invalid-this": "off",
+        "no-magic-numbers": "off",
+        "prefer-arrow-callback": "off"
+    }
+}
