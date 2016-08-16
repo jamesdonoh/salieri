@@ -31,10 +31,22 @@ const argv = require('yargs')
         describe: 'do not display request errors in markup',
         default: false
     })
+    .option('staticprefix', {
+        describe: 'prefix which identifies a request for a static asset',
+        default: '/img'
+    })
+    .option('statichost', {
+        describe: 'where to send requests for static assets',
+        default: 'localhost'
+    })
+    .option('staticpath', {
+        describe: 'path on the statichost where the static assets are',
+        default: '/img'
+    })
     .help('help')
     .argv;
 
-const readFile = (filename) => fs.readFileSync(filename, 'utf-8');
+const readFile = filename => fs.readFileSync(filename, 'utf-8');
 
 const template = readFile(argv.template);
 const config = readFile(argv.config);
@@ -58,5 +70,5 @@ const buildPage = createBuilder(template, config, rp, Envelope);
 
 const server = require('./lib/server');
 
-server.createServer(buildPage)
-    .listen(SERVER_PORT, () => console.log('Listening on port %d', SERVER_PORT));
+server.createServer(buildPage, argv.staticprefix, argv.statichost, argv.staticpath)
+    .listen(SERVER_PORT, () => console.log('Listening on port %d', SERVER_PORT, ', images served from', argv.statichost));

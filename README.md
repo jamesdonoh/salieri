@@ -15,16 +15,34 @@ $ node index.js --help
 Usage: index.js [options] -t <template> -c <config>
 
 Options:
-  --template, -t  path to page template                               [required]
-  --config, -c    path to page config JSON                            [required]
+  --template, -t  path to page template                                [required]
+  --config, -c    path to page config JSON                             [required]
   --cert          use specified client certificate for TLS
   --cacert        use specified CA certificate for TLS
-  --labels        show component labels to help with debugging  [default: false]
-  --noerrors      do not display request errors in markup       [default: false]
+  --labels        show component labels to help with debugging         [default: false]
+  --noerrors      do not display request errors in markup              [default: false]
+  --staticprefix  prefix which identifies a request for a static asset [default: /img]
+  --statichost    where to send requests for static assets             [default: localhost]
+  --staticpath    path on the statichost where the static assets are   [default: /img]
   --help          Show help                                            [boolean]
 ```
 
 Once the server is running, point your browser at http://localhost:3000/
+
+The `staticprefix`, `statichost` and `staticpath` are used to provide access to static assets.
+For example, if your CSS has an image sprite addressed as `url(img/news--icons-sprite.png)`, by running
+a local webserver on port 80 in the same directory as the `img` directory, and using the default values,
+requests to `localhost:3000/img/news--icons-sprite.png` will be proxied to `localhost:/img/news--icons-sprite.png`
+
+Another example is using the build-in web server on the Mac and creating a symlink to your Morph module:
+
+```
+cd /Library/WebServer/Documents
+ln -s /Users/myusername/morph-modules/my-morph-module my-morph-module
+```
+
+The Salieri parameters would be `--staticprefix /img --statichost localhost --staticpath my-morph-module/public/img`.
+
 
 ## Parameters
 
