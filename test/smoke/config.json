@@ -1,0 +1,17 @@
+{
+  "components": [
+    {
+      "id": "header",
+      "endpoint": "http:\/\/localhost:3001/header.json"
+    },
+    {
+      "id": "content",
+      "endpoint": "http:\/\/localhost:3001/content.json"
+    },
+    {
+      "id": "footer",
+      "endpoint": "http:\/\/localhost:3001/footer.json"
+    }
+  ]
+}
+
