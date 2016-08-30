@@ -8,7 +8,7 @@
   "description": "Tiny ES6 server for playing around with and debugging web component envelopes",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/mocha"
+    "test": "NODE_ENV=test mocha test/unit"
   },
   "author": "James Donohue",
   "repository": {
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-spies": "^0.7.1",
     "mocha": "^2.4.5",
     "sinon": "^1.17.4",
     "supertest": "^1.2.0"
