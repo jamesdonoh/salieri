@@ -2,23 +2,19 @@
   "components": [
     {
       "id": "header",
-      "endpoint": "http:\/\/localhost:3001/header.json"
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/header.json"
     },
     {
       "id": "content",
-      "endpoint": "http:\/\/localhost:3001/content.json"
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/content.json"
     },
     {
       "id": "error",
-      "endpoint": "http:\/\/localhost:3001/error"
-    },
-    {
-      "id": "accepted",
-      "endpoint": "http:\/\/localhost:3001/accepted"
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/missing.json"
     },
     {
       "id": "footer",
-      "endpoint": "http:\/\/localhost:3001/footer.json"
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/footer.json"
     }
   ]
 }
