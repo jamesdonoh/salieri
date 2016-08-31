@@ -4,7 +4,7 @@ Tiny ES6 server for playing around with and debugging web component envelopes.
 
 ## Requirements
 
-- Node.js v4.0 or later
+- Node.js v6.0.0 or later
 
 ## Usage
 
