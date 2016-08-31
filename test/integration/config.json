@@ -9,6 +9,14 @@
       "endpoint": "http:\/\/localhost:3001/content.json"
     },
     {
+      "id": "error",
+      "endpoint": "http:\/\/localhost:3001/error"
+    },
+    {
+      "id": "accepted",
+      "endpoint": "http:\/\/localhost:3001/accepted"
+    },
+    {
       "id": "footer",
       "endpoint": "http:\/\/localhost:3001/footer.json"
     }

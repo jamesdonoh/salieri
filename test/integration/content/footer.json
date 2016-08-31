@@ -1,5 +1,7 @@
 {
-    "head": [],
+    "head": [
+        "<style>hr { width: 50% }</style>"
+    ],
     "bodyInline": "<hr><p>(c) Yoyodyne, Inc.</p>",
     "bodyLast": []
 }

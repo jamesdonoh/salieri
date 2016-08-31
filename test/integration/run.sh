@@ -20,7 +20,7 @@ function listening {
 }
 
 echo Starting saleri server
-node $SALIERI_MODULE &
+NODE_ENV=test node $SALIERI_MODULE &
 
 echo Starting endpoint server
 node $ENDPOINT_MODULE &
