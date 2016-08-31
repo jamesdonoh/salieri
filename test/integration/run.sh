@@ -2,7 +2,7 @@
 
 DIRNAME="$(dirname $0)"
 SALIERI_MODULE="$DIRNAME/../../lib/server.js"
-ENDPOINT_MODULE="$DIRNAME/endpoint.js"
+SALIERI_CMD="node $SALIERI_MODULE $DIRNAME/config.json $DIRNAME/template.html"
 URL=http://localhost:3000/?foo=1
 CURL="curl -s -S -m 10"
 EXPECTED="$DIRNAME/expected.html"
@@ -20,20 +20,17 @@ function listening {
 }
 
 echo Starting saleri server
-NODE_ENV=test node $SALIERI_MODULE &
-
-echo Starting endpoint server
-node $ENDPOINT_MODULE &
+NODE_ENV=test $SALIERI_CMD &
 
 TRIES=0
-until (listening 3000 && listening 3001) || [ $TRIES -gt $MAX_TRIES ]; do
-    echo "Waiting for servers to start..."
+until (listening 3000) || [ $TRIES -gt $MAX_TRIES ]; do
+    echo "Waiting for server to start..."
     sleep 0.2
     ((TRIES++))
 done
 
 if [ $TRIES -gt $MAX_TRIES ]; then
-    fail "Servers did not start in a timely fashion"
+    fail "Server did not start in a timely fashion"
 fi
 
 if [ "$1" = "--update" ]; then

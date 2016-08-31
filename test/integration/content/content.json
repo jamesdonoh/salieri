@@ -1,7 +1,0 @@
-{
-    "head": [],
-    "bodyInline": "<p>Some page content</p>",
-    "bodyLast": [
-        "<script>a = 2</script>"
-    ]
-}
