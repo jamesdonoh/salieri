@@ -26,7 +26,7 @@ TRIES=0
 until (listening 3000) || [ $TRIES -gt $MAX_TRIES ]; do
     echo "Waiting for server to start..."
     sleep 0.2
-    ((TRIES++))
+    TRIES=$((TRIES++))
 done
 
 if [ $TRIES -gt $MAX_TRIES ]; then
