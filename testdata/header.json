@@ -1,0 +1,9 @@
+{
+    "head": [
+        "<style>body { font-family: Arial }</style>"
+    ],
+    "bodyInline": "<h1>Header</h1>",
+    "bodyLast": [
+        "<script>a = 1</script>"
+    ]
+}
