@@ -1,7 +1,7 @@
 const chai = require('chai');
 const spies = require('chai-spies');
 
-const handleErrors = require('../lib/handle-errors');
+const handleErrors = require('../../lib/handle-errors');
 
 chai.use(spies);
 const expect = chai.expect;
@@ -56,7 +56,7 @@ describe('Error handling', () => {
 
         handleErrors(req, mockRes(comp), next);
 
-        expect(comp.reason).to.equal('Non-200 response (400 Bad request - Invalid parameters)');
+        expect(comp.reason).to.equal('400 Bad request - Invalid parameters');
     });
 
     it('should mark components with non-JSON responses as failures', () => {
@@ -65,15 +65,38 @@ describe('Error handling', () => {
         handleErrors(req, mockRes(comp), next);
 
         expect(comp.status).to.equal('failed');
-        expect(comp.reason).to.equal('Invalid envelope (hello)');
+        expect(comp.reason).to.equal('Invalid envelope');
     });
 
-    xit('should mark components with invalid envelopes as failures', () => {
+    it('should mark components with invalid envelopes as failures', () => {
         const comp = { result: { statusCode: 200, body: { foo: 1 } } };
 
         handleErrors(req, mockRes(comp), next);
 
         expect(comp.status).to.equal('failed');
-        expect(comp.reason).to.equal('Invalid envelope (hello)');
+    });
+
+    describe('compoments with valid envelopes', () => {
+        const validEnvelope = {
+            head: ['...', '...'],
+            bodyInline: 'ooo',
+            bodyLast: ['...']
+        };
+
+        it('should mark components as succeeded', () => {
+            const comp = { result: { statusCode: 200, body: validEnvelope } };
+
+            handleErrors(req, mockRes(comp), next);
+
+            expect(comp.status).to.equal('succeeded');
+        });
+
+        it('should set envelope property to parsed envelope', () => {
+            const comp = { result: { statusCode: 200, body: validEnvelope } };
+
+            handleErrors(req, mockRes(comp), next);
+
+            expect(comp.envelope).to.deep.equal(validEnvelope);
+        });
     });
 });
