@@ -2,15 +2,21 @@
   "name": "salieri",
   "version": "2.0.0",
   "engines": {
-      "node": ">= 6.1"
+    "node": ">= 6.1"
   },
   "engineStrict": true,
   "description": "Tiny ES6 server for playing around with and debugging web component envelopes",
-  "main": "index.js",
-  "scripts": {
-    "test": "NODE_ENV=test mocha test/unit"
+  "main": "bin/salieri.js",
+  "bin": {
+    "salieri": "bin/salieri.js"
   },
-  "author": "James Donohue",
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "test:integration": "test/integration/run.sh",
+    "test:unit": "mocha test/unit/",
+    "test": "npm run test:unit"
+  },
+  "author": "James Donohue <james.brackish@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/jamesdonoh/salieri.git"
@@ -26,6 +32,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
+    "eslint": "^3.4.0",
     "mocha": "^2.4.5",
     "sinon": "^1.17.4",
     "supertest": "^1.2.0"
