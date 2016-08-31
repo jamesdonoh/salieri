@@ -14,7 +14,7 @@
     "lint": "eslint **/*.js",
     "test:integration": "test/integration/run.sh",
     "test:unit": "mocha test/unit/",
-    "test": "npm run test:unit"
+    "test": "npm run test:unit && npm run test:integration"
   },
   "author": "James Donohue <james.brackish@gmail.com>",
   "repository": {
