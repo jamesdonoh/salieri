@@ -7,7 +7,7 @@ URL=http://localhost:3000/?foo=1
 CURL="curl -s -S -m 10"
 EXPECTED="$DIRNAME/expected.html"
 SLEEP_TIME=0.2
-MAX_TRIES=1
+MAX_TRIES=50
 
 trap 'kill $(jobs -p)' EXIT
 
