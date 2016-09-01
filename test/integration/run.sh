@@ -6,7 +6,8 @@ SALIERI_CMD="node $SALIERI_MODULE $DIRNAME/config.json $DIRNAME/template.html"
 URL=http://localhost:3000/?foo=1
 CURL="curl -s -S -m 10"
 EXPECTED="$DIRNAME/expected.html"
-MAX_TRIES=10
+SLEEP_TIME=0.2
+MAX_TRIES=1
 
 trap 'kill $(jobs -p)' EXIT
 
@@ -23,15 +24,15 @@ echo Starting saleri server
 NODE_ENV=test $SALIERI_CMD &
 
 TRIES=0
-until (listening 3000) || [ $TRIES -gt $MAX_TRIES ]; do
-    echo "Waiting for server to start..."
-    sleep 0.2
-    TRIES=$((TRIES++))
-done
+until listening 3000; do
+    TRIES=$(($TRIES+1))
+    if [ $TRIES -gt $MAX_TRIES ]; then
+        fail "Server did not start in a timely fashion"
+    fi
 
-if [ $TRIES -gt $MAX_TRIES ]; then
-    fail "Server did not start in a timely fashion"
-fi
+    echo "Waiting for server to start..."
+    sleep $SLEEP_TIME
+done
 
 if [ "$1" = "--update" ]; then
     echo "Updating expected output"
