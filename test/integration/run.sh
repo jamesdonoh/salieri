@@ -9,11 +9,15 @@ EXPECTED="$DIRNAME/expected.html"
 SLEEP_TIME=0.2
 MAX_TRIES=50
 
-trap 'kill $(jobs -p)' EXIT
+trap 'running && kill $(jobs -p)' EXIT
 
 function fail {
-    echo "FAILED: $1"
+    echo "FAIL: $1"
     exit 1
+}
+
+function running {
+    jobs %% &>/dev/null
 }
 
 function listening {
@@ -28,6 +32,8 @@ until listening 3000; do
     TRIES=$(($TRIES+1))
     if [ $TRIES -gt $MAX_TRIES ]; then
         fail "Server did not start in a timely fashion"
+    elif ! running; then
+        fail "Server process died unexpectedly"
     fi
 
     echo "Waiting for server to start..."
@@ -40,10 +46,10 @@ if [ "$1" = "--update" ]; then
     exit
 fi
 
-echo "Making HTTP request and comparing response to expected..."
+echo "Making HTTP request to $URL and checking response..."
 
 if ! $CURL $URL | diff "$EXPECTED" -; then
     fail "Response did not match expected"
 fi
 
-echo SUCCESS
+echo PASS
