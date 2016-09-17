@@ -1,5 +1,9 @@
 # salieri
 
+<p align="center">
+[![Build Status](https://travis-ci.org/jamesdonoh/salieri.svg?branch=master)](https://travis-ci.org/jamesdonoh/salieri)
+</p>
+
 Tiny ES6 server for playing around with and debugging web component envelopes.
 
 ## Requirements
