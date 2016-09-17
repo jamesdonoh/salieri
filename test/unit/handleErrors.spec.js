@@ -9,12 +9,12 @@ describe('Error handling', () => {
     const stringUtilsStub = {
         excerpt: (val) => val
     };
-    const envelopeUtilsStub = {
+    const envelopeStub = {
         isValid: () => false
     };
     const stubs = {
         './stringUtils': stringUtilsStub,
-        './envelopeUtils': envelopeUtilsStub
+        './envelope': envelopeStub
     };
 
     const mockRes = (...components) => ({ locals: { components: components } });
@@ -104,7 +104,7 @@ describe('Error handling', () => {
     describe('successful envelopes', () => {
         it('should mark components with valid envelopes as succeeded', () => {
             const comp = { result: { statusCode: 200, body: 'valid' } };
-            envelopeUtilsStub.isValid = () => true;
+            envelopeStub.isValid = () => true;
 
             handleErrors(req, mockRes(comp), next);
 
