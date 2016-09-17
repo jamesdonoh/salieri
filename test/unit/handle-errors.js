@@ -6,10 +6,16 @@ chai.use(spies);
 const expect = chai.expect;
 
 describe('Error handling', () => {
+    const stringUtilsStub = {
+        excerpt: (val) => val
+    };
     const envelopeUtilsStub = {
         isValid: () => false
     };
-    const stubs = { './envelopeUtils': envelopeUtilsStub };
+    const stubs = {
+        './stringUtils': stringUtilsStub,
+        './envelopeUtils': envelopeUtilsStub
+    };
 
     const mockRes = (...components) => ({ locals: { components: components } });
 
@@ -80,14 +86,18 @@ describe('Error handling', () => {
             expect(req.app.locals.logError).to.have.been.called.with('x failed - blah');
         });
 
-        it('in strict mode should invole error-handling middleware if component failed', () => {
-            const err = new Error('blah');
-            const comp = { id: 'y', must_succeed: true, result: { error: err } };
-            req.app.locals.strictMode = true;
+        describe('strict mode', () => {
+            before(() => req.app.locals.strictMode = true);
 
-            handleErrors(req, mockRes(comp), next);
+            it('should invole error-handling middleware if component failed', () => {
+                const err = new Error('blah');
+                const comp = { id: 'y', must_succeed: true, result: { error: err } };
+                req.app.locals.strictMode = true;
 
-            expect(next).to.have.been.called.with(err);
+                handleErrors(req, mockRes(comp), next);
+
+                expect(next).to.have.been.called.with(err);
+            });
         });
     });
 
