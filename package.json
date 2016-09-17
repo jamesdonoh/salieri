@@ -24,7 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.4",
-    "lodash": "^4.11.2",
     "mustache": "^2.2.1",
     "request-promise": "^3.0.0",
     "yargs": "^4.7.1"
