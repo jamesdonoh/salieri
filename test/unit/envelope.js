@@ -28,9 +28,39 @@ describe('Envelope tools', () => {
     });
 
     context('combine', () => {
-        it('should be identity function for input of one envelope');
-        it('should combine two envelopes correctly');
-        it('should combine other numbers of envelopes correctly');
-        it('should throw an error if an invalid envelope is given');
+        it('should just join head and bodyLast arrays for a single envelope', () => {
+            const envs = [{ head: ['head'], bodyInline: 'body', bodyLast: ['last'] }];
+
+            expect(envelope.combine(envs)).to.deep.equal(
+                { head: 'head', bodyInline: 'body', bodyLast: 'last' }
+            );
+        });
+
+        it('should combine two simple envelopes correctly', () => {
+            const envs = [
+                { head: ['head1'], bodyInline: 'body1', bodyLast: ['last1'] },
+                { head: ['head2'], bodyInline: 'body2', bodyLast: ['last2'] }
+            ];
+
+            expect(envelope.combine(envs)).to.deep.equal({
+                head: 'head1\nhead2',
+                bodyInline: 'body1\nbody2',
+                bodyLast: 'last1\nlast2'
+            });
+        });
+
+        it('should combine multiple envelopes with empty components correctly', () => {
+            const envs = [
+                { head: [], bodyInline: 'body1', bodyLast: ['last1'] },
+                { head: ['head2'], bodyInline: '', bodyLast: ['last2'] },
+                { head: ['head3'], bodyInline: 'body3', bodyLast: [] }
+            ];
+
+            expect(envelope.combine(envs)).to.deep.equal({
+                head: 'head2\nhead3',
+                bodyInline: 'body1\n\nbody3',
+                bodyLast: 'last1\nlast2'
+            });
+        });
     });
 });
