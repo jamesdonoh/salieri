@@ -22,7 +22,7 @@ describe('Adding component labels', () => {
     let next;
 
     beforeEach(() => {
-        addLabels = proxyquire('../../lib/add-labels', stubs);
+        addLabels = proxyquire('../../lib/addLabels', stubs);
 
         req = { app: { locals: { } } };
         next = chai.spy('next');

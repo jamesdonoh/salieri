@@ -24,7 +24,7 @@ describe('Error handling', () => {
     let next;
 
     beforeEach(() => {
-        handleErrors = proxyquire('../../lib/handle-errors', stubs);
+        handleErrors = proxyquire('../../lib/handleErrors', stubs);
 
         req = { app: { locals: { } } };
         next = chai.spy('next');
