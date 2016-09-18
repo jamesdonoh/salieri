@@ -15,16 +15,16 @@ describe('Adding component labels', () => {
         './styles': stylesStub
     };
 
-    const mockRes = (...components) => ({ locals: { components: components } });
-
     let addLabels;
     let req;
+    let res;
     let next;
 
     beforeEach(() => {
         addLabels = proxyquire('../../lib/addLabels', stubs);
 
         req = { app: { locals: { } } };
+        res = { locals: { components: [] } };
         next = chai.spy('next');
     });
 
@@ -33,15 +33,16 @@ describe('Adding component labels', () => {
     });
 
     context('components that did not succeed', () => {
-        const expectedLabel = '<div class="sal-label sal-label--failed">foo [failed]: some reason</div>';
-        let comp;
+        const expected = '<div class="sal-label sal-label--failed">foo [failed]: some reason</div>';
 
         beforeEach(() => {
-            comp = {
-                id: 'foo',
-                status: 'failed',
-                reason: 'some reason'
-            };
+            res.locals.components = [
+                {
+                    id: 'foo',
+                    status: 'failed',
+                    reason: 'some reason'
+                }
+            ];
         });
 
         afterEach(() => {
@@ -49,55 +50,58 @@ describe('Adding component labels', () => {
         });
 
         it('should add a label', () => {
-            addLabels(req, mockRes(comp), next);
+            addLabels(req, res, next);
 
-            expect(comp.envelope.bodyInline).to.equal(expectedLabel);
+            expect(res.locals.components[0].envelope.bodyInline).to.equal(expected);
         });
 
         it('should prepend label if there is already an envelope', () => {
-            comp.envelope = {
-                bodyInline: 'original body'
+            res.locals.components[0].envelope = {
+                bodyInline: 'original'
             };
-            const res = mockRes(comp);
 
-            addLabels(req, mockRes(comp), next);
+            addLabels(req, res, next);
 
-            expect(comp.envelope.bodyInline).to.equal(expectedLabel + 'original body');
+            expect(res.locals.components[0].envelope.bodyInline).to.equal(expected + 'original');
         });
     });
 
     context('components that succeeded', () => {
-        let comp;
-
         beforeEach(() => {
-            comp = {
-                id: 'bar',
-                status: 'succeeded',
-                envelope: { bodyInline: 'the body' }
-            };
+            res.locals.components = [
+                {
+                    id: 'bar',
+                    status: 'succeeded',
+                    envelope: { bodyInline: 'the body' }
+                }
+            ];
         });
 
         it('should not add a label', () => {
-            addLabels(req, mockRes(comp), next);
+            addLabels(req, res, next);
 
-            expect(comp.envelope.bodyInline).to.equal('the body');
+            expect(res.locals.components[0].envelope.bodyInline).to.equal('the body');
         });
 
         context('labelAll mode', () => {
             it('should add a label', () => {
                 req.app.locals.labelAll = true;
 
-                addLabels(req, mockRes(comp), next);
+                addLabels(req, res, next);
 
                 const expected = '<div class="sal-label sal-label--succeeded">bar ⌄</div>the body'
-                expect(comp.envelope.bodyInline).to.equal(expected);
+                expect(res.locals.components[0].envelope.bodyInline).to.equal(expected);
             });
         });
     });
 
     context('label styles component', () => {
         it('should be added if more than one label was added', () => {
-            const res = mockRes({ status: 'failed' });
+            res.locals.components = [
+                {
+                    status: 'failed'
+                }
+            ];
 
             addLabels(req, res, next);
 
@@ -106,7 +110,6 @@ describe('Adding component labels', () => {
         });
 
         it('should not be added if no labels were added', () => {
-            const res = mockRes();
             addLabels(req, res, next);
 
             expect(res.locals.components).not.to.include(stylesStub);

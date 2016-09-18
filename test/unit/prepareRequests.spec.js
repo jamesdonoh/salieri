@@ -12,6 +12,7 @@ describe('Preparing component requests', () => {
     
     let prepareRequests;
     let req;
+    let res;
     let next;
 
     beforeEach(() => {
