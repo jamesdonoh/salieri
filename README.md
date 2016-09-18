@@ -58,7 +58,7 @@ This error means that you have specified one or more HTTPS endpoints with certif
 
 ## Tests
 
-Unit and integration tests can be run via `npm test`. Use `npm lint` to check against coding standards. For more details see the `package.json`.
+Unit and integration and coding standards tests can be run via `npm test`. For more details see the `package.json` file.
 
 ## Changelog
 

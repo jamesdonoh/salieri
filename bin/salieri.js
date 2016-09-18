@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint no-process-env: "off" */
+
 const argv = require('yargs')
     .usage('Usage: $0 [options] -t <template> -c <config>')
     .option('template', {
@@ -35,4 +37,6 @@ const template = readFile(argv.template);
 const config = readFile(argv.config);
 JSON.parse(config); // Fail fast if config is invalid
 
-const app = require('../lib/server')(rp, config, template, argv.labelall);
+const logErrors = process.env.NODE_ENV !== 'test';
+
+require('../lib/server')(rp, config, template, argv.labelall, logErrors);
