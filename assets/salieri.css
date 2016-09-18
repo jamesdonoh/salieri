@@ -1,0 +1,21 @@
+.sal-label {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    padding: 3px;
+    color: #fff;
+}
+
+.sal-label--succeeded {
+    background-color: seagreen;
+    border-bottom: solid 1px darkgreen;
+}
+
+.sal-label--warning {
+    background-color: darkgoldenrod;
+    border-bottom: solid 1px darkolivegreen;
+}
+
+.sal-label--failed {
+    background-color: indianred;
+    border-bottom: solid 1px darkred;
+}

@@ -1,0 +1,11 @@
+{
+    "env": {
+        "mocha": true
+    },
+    "rules": {
+        "id-length": "off",
+        "max-statements": "off",
+        "no-magic-numbers": "off",
+        "no-unused-expressions": "off"
+    }
+}

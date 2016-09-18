@@ -1,0 +1,21 @@
+{
+  "components": [
+    {
+      "id": "header",
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/header.json"
+    },
+    {
+      "id": "content",
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/{{param1}}.json"
+    },
+    {
+      "id": "error",
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/missing.json"
+    },
+    {
+      "id": "footer",
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/{{param2}}.json"
+    }
+  ]
+}
+
