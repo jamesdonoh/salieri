@@ -87,8 +87,6 @@ describe('Error handling', () => {
         });
 
         describe('strict mode', () => {
-            before(() => req.app.locals.strictMode = true);
-
             it('should invole error-handling middleware if component failed', () => {
                 const err = new Error('blah');
                 res.locals.components = [{ id: 'y', must_succeed: true, result: { error: err } }];

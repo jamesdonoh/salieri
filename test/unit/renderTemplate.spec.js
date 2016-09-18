@@ -15,6 +15,7 @@ describe('Rendering template', () => {
 
     let renderTemplate;
     let req;
+    let res;
 
     beforeEach(() => {
         renderTemplate = proxyquire('../../lib/renderTemplate', stubs);

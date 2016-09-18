@@ -4,9 +4,11 @@ const spies = require('chai-spies');
 chai.use(spies);
 const expect = chai.expect;
 
+const makeRequests = require('../../lib/makeRequests');
+
 describe('Making component requests', () => {
     const req = {};
-    const getMakeRequests = (rpStub) => require('../../lib/makeRequests')(rpStub);
+    const getMakeRequests = (rpStub) => makeRequests(rpStub);
 
     it('should pass endpoint URLs to request-promise', () => {
         const rpStub = chai.spy(() => Promise.resolve());
@@ -28,7 +30,7 @@ describe('Making component requests', () => {
         const next = () => {
             expect(res.locals.components[0].result).to.equal('<<response data>>');
             done();
-        }
+        };
 
         makeRequests(req, res, next);
     });
@@ -40,7 +42,7 @@ describe('Making component requests', () => {
         const next = () => {
             expect(res.locals.components[0].result).to.equal('ERROR');
             done();
-        }
+        };
 
         makeRequests(req, res, next);
     });

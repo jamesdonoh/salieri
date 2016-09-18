@@ -9,7 +9,7 @@ describe('Preparing component requests', () => {
     const stubs = {
         'mustache': {}
     };
-    
+
     let prepareRequests;
     let req;
     let res;
@@ -38,7 +38,7 @@ describe('Preparing component requests', () => {
     });
 
     it('should store prepared component data in response locals', () => {
-        stubs.mustache.render = (str) => '{ "components": [{ "a": "one"}, { "b": "two" }] }';
+        stubs.mustache.render = () => '{ "components": [{ "a": "one"}, { "b": "two" }] }';
 
         prepareRequests(req, res, next);
 

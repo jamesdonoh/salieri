@@ -62,7 +62,7 @@ describe('Adding component labels', () => {
 
             addLabels(req, res, next);
 
-            expect(res.locals.components[0].envelope.bodyInline).to.equal(expected + 'original');
+            expect(res.locals.components[0].envelope.bodyInline).to.equal(`${expected}original`);
         });
     });
 
@@ -89,7 +89,7 @@ describe('Adding component labels', () => {
 
                 addLabels(req, res, next);
 
-                const expected = '<div class="sal-label sal-label--succeeded">bar ⌄</div>the body'
+                const expected = '<div class="sal-label sal-label--succeeded">bar ⌄</div>the body';
                 expect(res.locals.components[0].envelope.bodyInline).to.equal(expected);
             });
         });
