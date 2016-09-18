@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
 DIRNAME="$(dirname $0)"
-SALIERI_MODULE="$DIRNAME/../../lib/server.js"
-SALIERI_CMD="node $SALIERI_MODULE $DIRNAME/config.json $DIRNAME/template.html"
-URL=http://localhost:3000/?foo=1
+SALIERI_MODULE="$DIRNAME/../../bin/salieri.js"
+SALIERI_CMD="node $SALIERI_MODULE -c $DIRNAME/config.json -t $DIRNAME/template.html -l"
+URL="http://localhost:3000/?param1=content&param2=footer"
 CURL="curl -s -S -m 10"
 EXPECTED="$DIRNAME/expected.html"
 SLEEP_TIME=0.2

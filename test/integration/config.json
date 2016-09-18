@@ -6,7 +6,7 @@
     },
     {
       "id": "content",
-      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/content.json"
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/{{param1}}.json"
     },
     {
       "id": "error",
@@ -14,7 +14,7 @@
     },
     {
       "id": "footer",
-      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/footer.json"
+      "endpoint": "https://jamesdonoh.github.io/salieri/testdata/{{param2}}.json"
     }
   ]
 }
