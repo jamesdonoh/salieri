@@ -1,10 +1,8 @@
-# salieri
+<h1 align="center">salieri</h1>
 
 <p align="center">
-[![Build Status](https://travis-ci.org/jamesdonoh/salieri.svg?branch=master)](https://travis-ci.org/jamesdonoh/salieri)
+<a href="https://travis-ci.org/jamesdonoh/salieri" target="_blank"><img src="https://travis-ci.org/jamesdonoh/salieri.svg?branch=master" alt="Build Status"></a>
 </p>
-
-Tiny ES6 server for playing around with and debugging web component envelopes.
 
 ## Requirements
 
@@ -35,7 +33,7 @@ Options:
 For example:
 
 ```
-$ salieri -c myconfig.json -t mytemplate.mustache`
+$ salieri -c myconfig.json -t mytemplate.mustache
 ```
 
 Salieri runs on port 3000 by default. Once it is running, point your browser at http://localhost:3000/
