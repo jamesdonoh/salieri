@@ -16,14 +16,16 @@ describe('Envelope tools', () => {
             expect(envelope.isValid({ head: [], bodyLast: [] })).to.be.false;
         });
 
-        it('should be false for an envelope with incorrect key types', () => {
-            expect(envelope.isValid({ head: [], bodyInline: ['blah'], bodyLast: [] })).to.be.false;
-            expect(envelope.isValid({ head: '', bodyInline: 'blah', bodyLast: [] })).to.be.false;
-            expect(envelope.isValid({ head: [], bodyInline: {}, bodyLast: [] })).to.be.false;
+        it('should be true for a valid envelope', () => {
+            expect(envelope.isValid({ head: [], bodyInline: 'blah', bodyLast: [] })).to.be.true;
         });
 
-        it('should be true for an envelope with correct key types', () => {
-            expect(envelope.isValid({ head: [], bodyInline: 'blah', bodyLast: [] })).to.be.true;
+        context('with strict type checking', () => {
+            it('should be false for an envelope with incorrect key types', () => {
+                expect(envelope.isValid({ head: [], bodyInline: ['blah'], bodyLast: [] }, true)).to.be.false;
+                expect(envelope.isValid({ head: '', bodyInline: 'blah', bodyLast: [] }, true)).to.be.false;
+                expect(envelope.isValid({ head: [], bodyInline: {}, bodyLast: [] }, true)).to.be.false;
+            });
         });
     });
 
