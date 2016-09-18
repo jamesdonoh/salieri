@@ -4,9 +4,11 @@
 <a href="https://travis-ci.org/jamesdonoh/salieri" target="_blank"><img src="https://travis-ci.org/jamesdonoh/salieri.svg?branch=master" alt="Build Status"></a>
 </p>
 
+Salieri is a lightweight Express-based server written in ES6 for experimenting with the composition of web content using JSON envelopes and Mustache templates. *It is not intended for production use.*
+
 ## Requirements
 
-- Node.js v6 and above is required because some features of ES6 are used
+- Node.js v6 and above is required (because some features of ES6 are used)
 
 ## Installation
 
