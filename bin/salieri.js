@@ -28,7 +28,9 @@ const argv = require('yargs')
 
 const readFile = (filename) => require('fs').readFileSync(filename, 'utf-8');
 
+const rp = require('../lib/rp')(argv.cert, argv.cacert);
+
 const template = readFile(argv.template);
 const config = readFile(argv.config);
 
-const app = require('../lib/server')(config, template, argv.labelall);
+const app = require('../lib/server')(rp, config, template, argv.labelall);

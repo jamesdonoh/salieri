@@ -1,13 +1,12 @@
 const chai = require('chai');
 const spies = require('chai-spies');
-const proxyquire = require('proxyquire').noCallThru();
 
 chai.use(spies);
 const expect = chai.expect;
 
 describe('Making component requests', () => {
     const req = {};
-    const getMakeRequests = (rpStub) => proxyquire('../../lib/makeRequests', { './rp': rpStub });
+    const getMakeRequests = (rpStub) => require('../../lib/makeRequests')(rpStub);
 
     it('should pass endpoint URLs to request-promise', () => {
         const rpStub = chai.spy(() => Promise.resolve());
