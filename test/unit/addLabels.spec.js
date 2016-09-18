@@ -6,12 +6,12 @@ chai.use(spies);
 const expect = chai.expect;
 
 describe('Adding component labels', () => {
-    const stringUtilsStub = {
+    const stringStub = {
         escapeHtml: chai.spy((val) => val)
     };
     const stylesStub = { envelope: { bodyInline: 'stub styles' } };
     const stubs = {
-        './stringUtils': stringUtilsStub,
+        './string': stringStub,
         './styles': stylesStub
     };
 
@@ -46,7 +46,7 @@ describe('Adding component labels', () => {
         });
 
         afterEach(() => {
-            expect(stringUtilsStub.escapeHtml).to.have.been.called.with('foo [failed]: some reason');
+            expect(stringStub.escapeHtml).to.have.been.called.with('foo [failed]: some reason');
         });
 
         it('should add a label', () => {

@@ -1,5 +1,5 @@
 const chai = require('chai');
-const string = require('../../lib/stringUtils');
+const string = require('../../lib/string');
 const expect = chai.expect;
 
 describe('String helpers', () => {
