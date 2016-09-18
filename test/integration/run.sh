@@ -24,6 +24,10 @@ function listening {
     nc -z -w 5 localhost $1 &>/dev/null
 }
 
+if listening 3000; then
+    fail 'Something else already listening on our port, aborting'
+fi
+
 echo Starting saleri server
 NODE_ENV=test $SALIERI_CMD &
 
