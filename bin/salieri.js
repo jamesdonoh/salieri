@@ -31,6 +31,8 @@ const readFile = (filename) => require('fs').readFileSync(filename, 'utf-8');
 const rp = require('../lib/rp')(argv.cert, argv.cacert);
 
 const template = readFile(argv.template);
+
 const config = readFile(argv.config);
+JSON.parse(config); // Fail fast if config is invalid
 
 const app = require('../lib/server')(rp, config, template, argv.labelall);
