@@ -38,10 +38,10 @@ describe('Preparing component requests', () => {
     });
 
     it('should store prepared component data in response locals', () => {
-        stubs.mustache.render = () => '{ "components": [{ "a": "one"}, { "b": "two" }] }';
+        stubs.mustache.render = () => '{ "contents": [{ "a": "one"}, { "b": "two" }] }';
 
         prepareRequests(req, res, next);
 
-        expect(res.locals.components).to.deep.equal([{ a: 'one' }, { b: 'two' }]);
+        expect(res.locals.contents).to.deep.equal([{ a: 'one' }, { b: 'two' }]);
     });
 });

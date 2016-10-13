@@ -26,7 +26,7 @@ describe('Error handling', () => {
         handleErrors = proxyquire('../../lib/handleErrors', stubs);
 
         req = { app: { locals: { } } };
-        res = { locals: { components: [] } };
+        res = { locals: { contents: [] } };
         next = chai.spy('next');
     });
 
@@ -36,49 +36,49 @@ describe('Error handling', () => {
 
     describe('unsuccessful envelopes', () => {
         it('should mark components with errors as failed', () => {
-            res.locals.components = [{ result: { error: { message: 'error message' } } }];
+            res.locals.contents = [{ result: { error: { message: 'error message' } } }];
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].status).to.equal('failed');
-            expect(res.locals.components[0].reason).to.equal('error message');
+            expect(res.locals.contents[0].status).to.equal('failed');
+            expect(res.locals.contents[0].reason).to.equal('error message');
         });
 
         it('should mark components with 202 responses as warnings', () => {
-            res.locals.components = [{ result: { statusCode: 202 } }];
+            res.locals.contents = [{ result: { statusCode: 202 } }];
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].status).to.equal('warning');
+            expect(res.locals.contents[0].status).to.equal('warning');
         });
 
         it('should mark components with other non-200 response codes as errors', () => {
-            res.locals.components = [{ result: { statusCode: 400 } }];
+            res.locals.contents = [{ result: { statusCode: 400 } }];
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].status).to.equal('failed');
+            expect(res.locals.contents[0].status).to.equal('failed');
         });
 
         it('should construct reason message using HTTP response', () => {
-            res.locals.components = [{ result: { statusCode: 400, statusMessage: 'Bad request', body: 'Invalid parameters' } }];
+            res.locals.contents = [{ result: { statusCode: 400, statusMessage: 'Bad request', body: 'Invalid parameters' } }];
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].reason).to.equal('400 Bad request - Invalid parameters');
+            expect(res.locals.contents[0].reason).to.equal('400 Bad request - Invalid parameters');
         });
 
         it('should mark components with invalid envelopes responses as failures', () => {
-            res.locals.components = [{ result: { statusCode: 200, body: 'hello' } }];
+            res.locals.contents = [{ result: { statusCode: 200, body: 'hello' } }];
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].status).to.equal('failed');
-            expect(res.locals.components[0].reason).to.equal('Invalid envelope');
+            expect(res.locals.contents[0].status).to.equal('failed');
+            expect(res.locals.contents[0].reason).to.equal('Invalid envelope');
         });
 
         it('should log errors if logging enabled', () => {
-            res.locals.components = [{ id: 'x', result: { error: { message: 'blah' } } }];
+            res.locals.contents = [{ id: 'x', result: { error: { message: 'blah' } } }];
             req.app.locals.logError = chai.spy('logErrors');
 
             handleErrors(req, res, next);
@@ -89,7 +89,7 @@ describe('Error handling', () => {
         describe('strict mode', () => {
             it('should invole error-handling middleware if component failed', () => {
                 const err = new Error('blah');
-                res.locals.components = [{ id: 'y', must_succeed: true, result: { error: err } }];
+                res.locals.contents = [{ id: 'y', must_succeed: true, result: { error: err } }];
                 req.app.locals.strictMode = true;
 
                 handleErrors(req, res, next);
@@ -101,21 +101,21 @@ describe('Error handling', () => {
 
     describe('successful envelopes', () => {
         it('should mark components with valid envelopes as succeeded', () => {
-            res.locals.components = [{ result: { statusCode: 200, body: 'valid' } }];
+            res.locals.contents = [{ result: { statusCode: 200, body: 'valid' } }];
             envelopeStub.isValid = () => true;
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].status).to.equal('succeeded');
+            expect(res.locals.contents[0].status).to.equal('succeeded');
         });
 
         it('should set envelope property to parsed envelope', () => {
             const envelope = { head: [], bodyInline: 'x' };
-            res.locals.components = [{ result: { statusCode: 200, body: envelope } }];
+            res.locals.contents = [{ result: { statusCode: 200, body: envelope } }];
 
             handleErrors(req, res, next);
 
-            expect(res.locals.components[0].envelope).to.deep.equal(envelope);
+            expect(res.locals.contents[0].envelope).to.deep.equal(envelope);
         });
     });
 });
