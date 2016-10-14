@@ -24,7 +24,7 @@ describe('Adding component labels', () => {
         addLabels = proxyquire('../../lib/addLabels', stubs);
 
         req = { app: { locals: { } } };
-        res = { locals: { components: [] } };
+        res = { locals: { contents: [] } };
         next = chai.spy('next');
     });
 
@@ -36,7 +36,7 @@ describe('Adding component labels', () => {
         const expected = '<div class="sal-label sal-label--failed">foo [failed]: some reason</div>';
 
         beforeEach(() => {
-            res.locals.components = [
+            res.locals.contents = [
                 {
                     id: 'foo',
                     status: 'failed',
@@ -52,23 +52,23 @@ describe('Adding component labels', () => {
         it('should add a label', () => {
             addLabels(req, res, next);
 
-            expect(res.locals.components[0].envelope.bodyInline).to.equal(expected);
+            expect(res.locals.contents[0].envelope.bodyInline).to.equal(expected);
         });
 
         it('should prepend label if there is already an envelope', () => {
-            res.locals.components[0].envelope = {
+            res.locals.contents[0].envelope = {
                 bodyInline: 'original'
             };
 
             addLabels(req, res, next);
 
-            expect(res.locals.components[0].envelope.bodyInline).to.equal(`${expected}original`);
+            expect(res.locals.contents[0].envelope.bodyInline).to.equal(`${expected}original`);
         });
     });
 
     context('components that succeeded', () => {
         beforeEach(() => {
-            res.locals.components = [
+            res.locals.contents = [
                 {
                     id: 'bar',
                     status: 'succeeded',
@@ -80,7 +80,7 @@ describe('Adding component labels', () => {
         it('should not add a label', () => {
             addLabels(req, res, next);
 
-            expect(res.locals.components[0].envelope.bodyInline).to.equal('the body');
+            expect(res.locals.contents[0].envelope.bodyInline).to.equal('the body');
         });
 
         context('labelAll mode', () => {
@@ -90,14 +90,14 @@ describe('Adding component labels', () => {
                 addLabels(req, res, next);
 
                 const expected = '<div class="sal-label sal-label--succeeded">bar ⌄</div>the body';
-                expect(res.locals.components[0].envelope.bodyInline).to.equal(expected);
+                expect(res.locals.contents[0].envelope.bodyInline).to.equal(expected);
             });
         });
     });
 
     context('label styles component', () => {
         it('should be added if more than one label was added', () => {
-            res.locals.components = [
+            res.locals.contents = [
                 {
                     status: 'failed'
                 }
@@ -105,14 +105,14 @@ describe('Adding component labels', () => {
 
             addLabels(req, res, next);
 
-            expect(res.locals.components).to.include(stylesStub);
-            expect(res.locals.components).to.have.length(2);
+            expect(res.locals.contents).to.include(stylesStub);
+            expect(res.locals.contents).to.have.length(2);
         });
 
         it('should not be added if no labels were added', () => {
             addLabels(req, res, next);
 
-            expect(res.locals.components).not.to.include(stylesStub);
+            expect(res.locals.contents).not.to.include(stylesStub);
         });
     });
 });

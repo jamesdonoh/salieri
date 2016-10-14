@@ -21,7 +21,7 @@ describe('Rendering template', () => {
         renderTemplate = proxyquire('../../lib/renderTemplate', stubs);
 
         req = { app: { locals: { } } };
-        res = { locals: { components: [] }, send: chai.spy() };
+        res = { locals: { contents: [] }, send: chai.spy() };
 
         envelopeStub.combine = chai.spy();
         mustacheStub.render = chai.spy();
@@ -32,7 +32,7 @@ describe('Rendering template', () => {
             { bodyInline: 'x' },
             { bodyInline: 'y' }
         ];
-        res.locals.components = [
+        res.locals.contents = [
             { envelope: envelopes[0] },
             { envelope: envelopes[1] }
         ];
