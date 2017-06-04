@@ -13,7 +13,7 @@ Salieri is a lightweight Express-based server written in ES6 for experimenting w
 ## Installation
 
 1. `git clone` this GitHub repo
-2. Run `npm link` to be able to invoke it from anywhere (optional)
+2. Run `npm install -g salieri` to be able to invoke it from anywhere (optional)
 
 ## Usage
 
