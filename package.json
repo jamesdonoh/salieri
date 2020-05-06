@@ -14,7 +14,9 @@
     "lint": "eslint '**/*.js'",
     "test:integration": "test/integration/run.sh",
     "test:unit": "mocha test/unit/",
-    "test": "npm run lint && npm run test:unit && npm run test:integration"
+    "test": "npm run lint && npm run test:unit && npm run test:integration",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "James Donohue <james.brackish@gmail.com>",
   "repository": {
@@ -27,7 +29,8 @@
     "mustache": "^2.2.1",
     "request": "^2.75.0",
     "request-promise": "^4.0.0",
-    "yargs": "^5.0.0"
+    "yargs": "^5.0.0",
+    "snyk": "^1.319.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -35,5 +38,6 @@
     "eslint": "^3.4.0",
     "mocha": "^3.0.0",
     "proxyquire": "^1.7.10"
-  }
+  },
+  "snyk": true
 }
