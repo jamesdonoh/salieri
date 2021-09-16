@@ -27,7 +27,7 @@
     "mustache": "^2.2.1",
     "request": "^2.75.0",
     "request-promise": "^4.0.0",
-    "yargs": "^5.0.0"
+    "yargs": "^15.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
